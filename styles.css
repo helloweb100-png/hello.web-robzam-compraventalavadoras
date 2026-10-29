@@ -905,7 +905,11 @@ em { font-style: normal; color: var(--orange-ink); }
 @keyframes ripple { to { transform: scale(4); opacity: 0; } }
 @keyframes wave-40 { to { transform: translateX(-40px); } }
 @keyframes agit { from { transform: translateX(-14px); } to { transform: translateX(14px); } }
-@keyframes wrench { from { transform: rotate(-10deg); } to { transform: rotate(14deg); } }
+/* técnico: la llave gira ±12° sobre la tuerca y el brazo (±9.6°, en sentido contrario) la sigue; mismo tiempo y mismos cortes */
+@keyframes wrench { 0%, 100% { transform: rotate(-12deg); } 62% { transform: rotate(12deg); } }
+@keyframes tech-arm { 0%, 100% { transform: rotate(9.6deg); } 62% { transform: rotate(-9.6deg); } }
+@keyframes tech-nod { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 62% { transform: translateY(1.5px) rotate(2deg); } }
+@keyframes tech-blink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
 @keyframes drip { 0% { transform: translateY(-6px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(14px); opacity: 0; } }
 @keyframes twinkle { 0%, 100% { transform: scale(.6); opacity: .5; } 50% { transform: scale(1.15); opacity: 1; } }
 
@@ -917,7 +921,10 @@ em { font-style: normal; color: var(--orange-ink); }
 .a-bob--2 { animation-delay: -2s; animation-duration: 5.4s; }
 .a-rot { animation: spin 18s linear infinite; }
 .a-rot-rev { animation: spin 12s linear infinite reverse; }
-.a-wrench { animation: wrench 2.2s ease-in-out infinite alternate; }
+.a-wrench { animation: wrench 1.4s ease-in-out infinite; }
+.a-arm { animation: tech-arm 1.4s ease-in-out infinite; }
+.a-nod { animation: tech-nod 1.4s ease-in-out infinite; }
+.a-eye { transform-box: fill-box; transform-origin: center; animation: tech-blink 4.2s ease-in-out infinite; }
 .a-twinkle { transform-box: fill-box; transform-origin: center; animation: twinkle 2.4s ease-in-out infinite; }
 .a-drip { animation: drip 1.8s ease-in infinite; }
 .a-blink { animation: blink 1.8s ease-in-out infinite; }

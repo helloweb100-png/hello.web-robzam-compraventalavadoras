@@ -459,12 +459,44 @@
     const tagPill = (w, label, fill, color, cls = '') =>
         `<g class="a-bob ${cls}"><rect width="${w}" height="42" rx="21" fill="${fill}"/><text x="${w / 2}" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700" fill="${color}">${label}</text></g>`;
 
-    const wrench = () => {
-        const u = ++uid;
-        return `
-        <mask id="wm${u}" maskUnits="userSpaceOnUse" x="-60" y="-70" width="120" height="220"><rect x="-60" y="-70" width="120" height="220" fill="#fff"/><rect x="-10" y="-76" width="20" height="46" rx="4" fill="#000"/></mask>
-        <g transform="rotate(35)"><g mask="url(#wm${u})"><circle r="30" fill="#0A1450"/></g><rect x="-12" y="14" width="24" height="104" rx="12" fill="#0A1450"/><rect x="-4" y="30" width="8" height="66" rx="4" fill="#fff" opacity=".2"/></g>`;
-    };
+    // llave: la cabeza (con la tuerca amarilla) queda en el origen y el mango sale hacia la derecha
+    const wrench = () => `
+        <rect x="8" y="-5.5" width="38" height="11" rx="5.5" fill="#0A1450"/>
+        <rect x="18" y="-2.4" width="20" height="2.6" rx="1.3" fill="#fff" opacity=".28"/>
+        <circle r="14" fill="#0A1450"/>
+        <polygon points="7.5,0 3.75,6.5 -3.75,6.5 -7.5,0 -3.75,-6.5 3.75,-6.5" fill="#FFC933"/>`;
+
+    // técnico de caricatura: pies en el origen, mira a la izquierda. El brazo izquierdo sostiene la llave
+    // (agarra el mango a 32px de la cabeza de la llave) y va al mismo ritmo que ella: ver tech-* en styles.css
+    const technician = () => `
+        <ellipse rx="46" ry="6" fill="#0A1450" opacity=".14"/>
+        <rect x="-30" y="-130" width="60" height="64" rx="18" fill="#1F4FD8" stroke="#0A1450" stroke-width="3"/>
+        <rect x="-16" y="-110" width="16" height="16" rx="4" fill="#FFC933" stroke="#0A1450" stroke-width="2.5"/>
+        <rect x="-22" y="-74" width="20" height="66" rx="8" fill="#0A1450"/><rect x="2" y="-74" width="20" height="66" rx="8" fill="#0A1450"/>
+        <rect x="-36" y="-14" width="32" height="14" rx="7" fill="#FF6A13" stroke="#0A1450" stroke-width="3"/><rect x="-2" y="-14" width="32" height="14" rx="7" fill="#FF6A13" stroke="#0A1450" stroke-width="3"/>
+        <path d="M24 -112L44 -94L26 -82" stroke="#0A1450" stroke-width="19" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 -112L44 -94L26 -82" stroke="#1F4FD8" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="26" cy="-80" r="8" fill="#FFD0A6" stroke="#0A1450" stroke-width="3"/>
+        <g class="a-nod" style="transform-origin:0 -128px">
+            <circle cx="-25" cy="-150" r="5.5" fill="#FFD0A6" stroke="#0A1450" stroke-width="3"/><circle cx="25" cy="-150" r="5.5" fill="#FFD0A6" stroke="#0A1450" stroke-width="3"/>
+            <circle cy="-152" r="25" fill="#FFD0A6" stroke="#0A1450" stroke-width="3"/>
+            <circle class="a-eye" cx="-11" cy="-142" r="3.2" fill="#0A1450"/><circle class="a-eye" cx="7" cy="-142" r="3.2" fill="#0A1450"/>
+            <circle cx="-17" cy="-136" r="4" fill="#FF6A13" opacity=".3"/><circle cx="14" cy="-136" r="4" fill="#FF6A13" opacity=".3"/>
+            <path d="M-8 -135q7 8 14 0" stroke="#0A1450" stroke-width="3" stroke-linecap="round"/>
+            <path d="M-27 -158a27 25 0 0 1 54 0z" fill="#FFC933" stroke="#0A1450" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="-4.5" y="-181.5" width="9" height="23.5" rx="3" fill="#FF6A13"/>
+            <rect x="-31" y="-163" width="62" height="9" rx="4.5" fill="#FF6A13" stroke="#0A1450" stroke-width="3"/>
+        </g>
+        <g transform="translate(-26 -112)"><g class="a-arm">
+            <path d="M0 0H-40" stroke="#0A1450" stroke-width="19" stroke-linecap="round"/>
+            <path d="M0 0H-40" stroke="#1F4FD8" stroke-width="13" stroke-linecap="round"/>
+            <circle cx="-41" r="8.5" fill="#FFD0A6" stroke="#0A1450" stroke-width="3"/>
+        </g></g>`;
+
+    const toolbox = () => `
+        <path d="M11 0v-5a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v5" stroke="#0A1450" stroke-width="3"/>
+        <rect width="38" height="22" rx="5" fill="#FF6A13" stroke="#0A1450" stroke-width="3"/>
+        <rect x="15" y="6" width="8" height="8" rx="2" fill="#FFC933" stroke="#0A1450" stroke-width="2"/>`;
 
     const spark = (x, y, s, d) => `<g transform="translate(${x} ${y}) scale(${s})"><path class="a-twinkle" style="animation-delay:${d}s" d="M0-14C1-5 5-1 14 0 5 1 1 5 0 14-1 5-5 1-14 0-5-1-1-5 0-14Z" fill="#FFC933" stroke="#0A1450" stroke-width="2" stroke-linejoin="round"/></g>`;
 
@@ -500,8 +532,10 @@
         'svc-repar': () => svg('0 0 400 260', `
             <circle cx="200" cy="132" r="112" fill="#fff" opacity=".78"/>
             <g transform="translate(78 14) scale(.8)">${washerFront()}</g>
-            <g transform="translate(300 128)"><g class="a-wrench">${wrench()}</g></g>
-            ${spark(262, 52, 1, 0)}${spark(340, 70, .7, .6)}${spark(250, 200, .6, 1.1)}`),
+            <g transform="translate(252 218)">${toolbox()}</g>
+            <g transform="translate(232 128)"><g class="a-wrench">${wrench()}</g></g>
+            <g transform="translate(330 240)">${technician()}</g>
+            ${spark(262, 52, 1, 0)}${spark(378, 58, .7, .6)}${spark(250, 100, .7, 1.1)}`),
     };
 
     function initArt() {
